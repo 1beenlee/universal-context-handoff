@@ -1,0 +1,24 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.DS_Store
+*.log
+task-*.log
+*.tgz
+*.zip
+
+# Local operation notes
+ACTIVE_TASKS.md
+walkthrough.md
+
+# Local handoff outputs
+.context-handoffs/
+.handoffs/
+handoffs/
+handoff.zip
+
+# Antigravity / local scratch artifacts
+brain/
+scratch/
+.system_generated/

@@ -1,0 +1,4 @@
+version: 1
+display_name: Universal Context Handoff Skill
+short_description: Move developer context between repositories with path-aware metadata.
+default_prompt: Help me save or apply a developer context handoff between repositories.

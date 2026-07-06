@@ -1,0 +1,52 @@
+{
+  "name": "universal-context-handoff",
+  "version": "0.1.0",
+  "description": "Path-aware CLI and skill for handing off context between multiple AI assistants/platforms.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.27.0",
+  "bin": {
+    "handoff": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "SKILL.md",
+    "SKILL-ko.md",
+    "agents",
+    "examples",
+    "LICENSE",
+    "README.md",
+    "README-ko.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsx src/cli.ts",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^7.10.1",
+    "adm-zip": "^0.5.14",
+    "commander": "^14.0.1",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/adm-zip": "^0.5.8",
+    "@types/node": "^24.10.0",
+    "eslint": "^9.39.1",
+    "globals": "^16.5.0",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.2",
+    "vitest": "^4.0.0"
+  }
+}
