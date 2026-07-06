@@ -104,7 +104,9 @@ async function resolveHandoffSelection(
 const program = new Command();
 program
   .name('handoff')
-  .description('Path-aware context handoff between multiple AI assistants/platforms.')
+  .description(
+    'Path-aware context handoff between multiple AI assistants/platforms.',
+  )
   .option('--json', 'Print machine-readable output', false);
 
 program
@@ -120,7 +122,11 @@ program
   .option('--platform <platform>', 'AI platform: claude-code|codex|antigravity')
   .option('--mode <mode>', 'Handoff mode: session|project')
   .option('--no-redact', 'Disable sensitive data redaction')
-  .option('--zip-raw', 'Archive raw log files and attachments into handoff.zip', false)
+  .option(
+    '--zip-raw',
+    'Archive raw log files and attachments into handoff.zip',
+    false,
+  )
   .option('--yes', 'Skip confirmation prompts', false)
   .action(async (commandOptions, command) => {
     const sourceRepoPath = await resolveGitRoot(
@@ -133,9 +139,13 @@ program
     await ensureExtractorAvailable(config.extractor);
 
     const platform = (commandOptions.platform ||
-      (commandOptions.yes ? 'claude-code' : await promptForPlatform())) as Platform;
+      (commandOptions.yes
+        ? 'claude-code'
+        : await promptForPlatform())) as Platform;
     const mode = (commandOptions.mode ||
-      (commandOptions.yes ? 'session' : await promptForHandoffMode())) as HandoffMode;
+      (commandOptions.yes
+        ? 'session'
+        : await promptForHandoffMode())) as HandoffMode;
     const redact = commandOptions.redact !== false;
     const zipRaw = !!commandOptions.zipRaw;
 
@@ -379,9 +389,7 @@ program
       config.extractor,
     );
     if (conversations.length === 0) {
-      throw new Error(
-        `No conversations were found for ${sourceRepoPath}.`,
-      );
+      throw new Error(`No conversations were found for ${sourceRepoPath}.`);
     }
 
     const selectedConversation = commandOptions.session
@@ -504,7 +512,11 @@ program
   .description(
     'Install this handoff plugin/skill into the selected platform (Antigravity, Claude Code, Codex).',
   )
-  .option('--platform <platform>', 'Target platform: antigravity|claude-code|codex', 'claude-code')
+  .option(
+    '--platform <platform>',
+    'Target platform: antigravity|claude-code|codex',
+    'claude-code',
+  )
   .option('--scope <scope>', 'Install scope: global|repo', 'global')
   .option(
     '--repo <path>',
@@ -519,8 +531,15 @@ program
       throw new Error(`Unsupported install scope: ${commandOptions.scope}`);
     }
 
-    const platform = commandOptions.platform as 'antigravity' | 'claude-code' | 'codex';
-    if (platform !== 'antigravity' && platform !== 'claude-code' && platform !== 'codex') {
+    const platform = commandOptions.platform as
+      | 'antigravity'
+      | 'claude-code'
+      | 'codex';
+    if (
+      platform !== 'antigravity' &&
+      platform !== 'claude-code' &&
+      platform !== 'codex'
+    ) {
       throw new Error(`Unsupported platform: ${commandOptions.platform}`);
     }
 

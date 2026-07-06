@@ -26,13 +26,25 @@ export function redactSensitiveData(text: string): string {
   if (!text) return text;
   let redacted = text;
   // API Keys (OpenAI sk-, GitHub ghp_, Google AIzaSy)
-  redacted = redacted.replaceAll(/(?:sk-|ghp_|AIzaSy)[a-zA-Z0-9_-]{20,80}/g, '[REDACTED_API_KEY]');
+  redacted = redacted.replaceAll(
+    /(?:sk-|ghp_|AIzaSy)[a-zA-Z0-9_-]{20,80}/g,
+    '[REDACTED_API_KEY]',
+  );
   // Password / Token assignment patterns
-  redacted = redacted.replaceAll(/(password|secret|token|pass|pwd)\s*[:=]\s*['"]?[a-zA-Z0-9_\-.:+]{8,64}['"]?/gi, (match, p1) => `${p1}: [REDACTED]`);
+  redacted = redacted.replaceAll(
+    /(password|secret|token|pass|pwd)\s*[:=]\s*['"]?[a-zA-Z0-9_\-.:+]{8,64}['"]?/gi,
+    (match, p1) => `${p1}: [REDACTED]`,
+  );
   // Bearer tokens
-  redacted = redacted.replaceAll(/Bearer\s+[a-zA-Z0-9_\-.:+]{20,200}/gi, 'Bearer [REDACTED]');
+  redacted = redacted.replaceAll(
+    /Bearer\s+[a-zA-Z0-9_\-.:+]{20,200}/gi,
+    'Bearer [REDACTED]',
+  );
   // Email addresses
-  redacted = redacted.replaceAll(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '[REDACTED_EMAIL]');
+  redacted = redacted.replaceAll(
+    /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
+    '[REDACTED_EMAIL]',
+  );
   return redacted;
 }
 
@@ -41,7 +53,10 @@ function getCodexHome(): string {
 }
 
 function getAntigravityHome(): string {
-  return process.env.ANTIGRAVITY_HOME || path.join(os.homedir(), '.gemini', 'antigravity');
+  return (
+    process.env.ANTIGRAVITY_HOME ||
+    path.join(os.homedir(), '.gemini', 'antigravity')
+  );
 }
 
 async function findFilesRecursively(
@@ -677,11 +692,13 @@ async function listCodexConversations(): Promise<ConversationReference[]> {
   const sessionsDir = path.join(codexHome, 'sessions');
   const archivedDir = path.join(codexHome, 'archived_sessions');
 
-  const files1 = await findFilesRecursively(sessionsDir, (name) =>
-    name.startsWith('rollout-') && name.endsWith('.jsonl'),
+  const files1 = await findFilesRecursively(
+    sessionsDir,
+    (name) => name.startsWith('rollout-') && name.endsWith('.jsonl'),
   );
-  const files2 = await findFilesRecursively(archivedDir, (name) =>
-    name.startsWith('rollout-') && name.endsWith('.jsonl'),
+  const files2 = await findFilesRecursively(
+    archivedDir,
+    (name) => name.startsWith('rollout-') && name.endsWith('.jsonl'),
   );
   const allFiles = [...files1, ...files2];
 
@@ -720,7 +737,10 @@ async function listCodexConversations(): Promise<ConversationReference[]> {
               .join(' ');
           }
           if (text.trim()) {
-            preview = text.trim().slice(0, 80).replace(/[\r\n]+/g, ' ');
+            preview = text
+              .trim()
+              .slice(0, 80)
+              .replace(/[\r\n]+/g, ' ');
             break;
           }
         }
@@ -746,7 +766,9 @@ async function listCodexConversations(): Promise<ConversationReference[]> {
   );
 }
 
-async function listAntigravityConversations(): Promise<ConversationReference[]> {
+async function listAntigravityConversations(): Promise<
+  ConversationReference[]
+> {
   const antigravityHome = getAntigravityHome();
   const brainDir = path.join(antigravityHome, 'brain');
 
@@ -785,7 +807,10 @@ async function listAntigravityConversations(): Promise<ConversationReference[]> 
           if (text.includes('<USER_REQUEST>')) {
             text = text.split('<USER_REQUEST>')[1].split('</USER_REQUEST>')[0];
           }
-          preview = text.trim().slice(0, 80).replace(/[\r\n]+/g, ' ');
+          preview = text
+            .trim()
+            .slice(0, 80)
+            .replace(/[\r\n]+/g, ' ');
           break;
         }
       }
@@ -820,11 +845,13 @@ async function exportCodexConversation(
   const sessionsDir = path.join(codexHome, 'sessions');
   const archivedDir = path.join(codexHome, 'archived_sessions');
 
-  const files1 = await findFilesRecursively(sessionsDir, (name) =>
-    name.startsWith('rollout-') && name.endsWith('.jsonl'),
+  const files1 = await findFilesRecursively(
+    sessionsDir,
+    (name) => name.startsWith('rollout-') && name.endsWith('.jsonl'),
   );
-  const files2 = await findFilesRecursively(archivedDir, (name) =>
-    name.startsWith('rollout-') && name.endsWith('.jsonl'),
+  const files2 = await findFilesRecursively(
+    archivedDir,
+    (name) => name.startsWith('rollout-') && name.endsWith('.jsonl'),
   );
   const allFiles = [...files1, ...files2];
 
@@ -874,7 +901,10 @@ async function exportCodexConversation(
         if (role === 'user') {
           heading = '## User';
           if (title === 'Untitled Codex Session') {
-            title = `Codex: ${text.trim().slice(0, 80).replace(/[\r\n]+/g, ' ')}`;
+            title = `Codex: ${text
+              .trim()
+              .slice(0, 80)
+              .replace(/[\r\n]+/g, ' ')}`;
           }
         } else if (role === 'assistant') {
           heading = '## Codex';
@@ -956,7 +986,10 @@ async function exportAntigravityConversation(
       if (source === 'USER_EXPLICIT') {
         heading = '## User';
         if (title === 'Untitled Antigravity Session') {
-          title = `Antigravity: ${text.trim().slice(0, 80).replace(/[\r\n]+/g, ' ')}`;
+          title = `Antigravity: ${text
+            .trim()
+            .slice(0, 80)
+            .replace(/[\r\n]+/g, ' ')}`;
         }
       } else if (source === 'MODEL') {
         heading = '## Antigravity';
@@ -1049,7 +1082,11 @@ export async function exportConversation(
   } else {
     const mode = await resolveMode(config);
     if (mode === 'builtin') {
-      conversation = await exportBuiltinConversation(repoPath, sessionId, config);
+      conversation = await exportBuiltinConversation(
+        repoPath,
+        sessionId,
+        config,
+      );
     } else {
       let exported: ExportedConversation | null = null;
       for (const strategy of config.exportStrategies) {
@@ -1076,7 +1113,9 @@ export async function exportConversation(
       conversation.transcriptMarkdown,
     );
     if (conversation.summaryShort) {
-      conversation.summaryShort = redactSensitiveData(conversation.summaryShort);
+      conversation.summaryShort = redactSensitiveData(
+        conversation.summaryShort,
+      );
     }
     if (conversation.summaryLong) {
       conversation.summaryLong = redactSensitiveData(conversation.summaryLong);

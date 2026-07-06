@@ -43,7 +43,10 @@ export function getGlobalSkillRoot(platform: string = 'claude-code'): string {
   return path.join(os.homedir(), '.claude', 'skills');
 }
 
-export function getRepoSkillRoot(repoRoot: string, platform: string = 'claude-code'): string {
+export function getRepoSkillRoot(
+  repoRoot: string,
+  platform: string = 'claude-code',
+): string {
   if (platform === 'antigravity') {
     return path.join(repoRoot, '.agents', 'plugins');
   }
@@ -107,7 +110,8 @@ export async function installSkillFiles(
     const pluginMetadata = {
       name: PLUGIN_DIR_NAME,
       version: '0.1.0',
-      description: 'Universal context handoff plugin for cross-platform assistant migrations.',
+      description:
+        'Universal context handoff plugin for cross-platform assistant migrations.',
       author: {
         name: 'Universal handoff team',
       },

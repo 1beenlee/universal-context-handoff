@@ -46,7 +46,9 @@ export const handoffMetadataSchema = z.object({
     transfer: transferRecordSchema.nullable(),
     applications: z.array(applyRecordSchema),
     // Extended fields
-    platform: z.enum(['claude-code', 'codex', 'antigravity']).default('claude-code'),
+    platform: z
+        .enum(['claude-code', 'codex', 'antigravity'])
+        .default('claude-code'),
     handoffMode: z.enum(['session', 'project']).default('session'),
     zipRaw: z.boolean().default(false),
     redacted: z.boolean().optional(),

@@ -64,10 +64,7 @@ async function resolveConfigFile(startDir: string): Promise<string | null> {
   const { root } = path.parse(startDir);
 
   while (true) {
-    const candidate = path.join(
-      currentDir,
-      'context-handoff.config.json',
-    );
+    const candidate = path.join(currentDir, 'context-handoff.config.json');
     if (await fileExists(candidate)) {
       return candidate;
     }
@@ -98,10 +95,12 @@ export async function loadAppConfig(startDir: string): Promise<AppConfig> {
             | undefined) ??
           (process.env.CCH_EXTRACTOR_MODE as
             | ExtractorConfig['mode']
-            | undefined) ?? DEFAULT_EXTRACTOR_CONFIG.mode,
+            | undefined) ??
+          DEFAULT_EXTRACTOR_CONFIG.mode,
         command:
           process.env.HANDOFF_EXTRACTOR_BIN ??
-          process.env.CCH_EXTRACTOR_BIN ?? DEFAULT_EXTRACTOR_CONFIG.command,
+          process.env.CCH_EXTRACTOR_BIN ??
+          DEFAULT_EXTRACTOR_CONFIG.command,
         claudeProjectsDir:
           process.env.HANDOFF_PROJECTS_DIR ??
           process.env.CCH_CLAUDE_PROJECTS_DIR ??

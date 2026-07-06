@@ -90,7 +90,8 @@ export async function saveHandoff(options: {
 
   // Parse attachments
   const mdText = exportedConversation.transcriptMarkdown;
-  const imageRegex = /!\[.*?\]\(((?:file:\/\/\/)?(?:[a-zA-Z]:\\|[\\/])[^)]+)\)/g;
+  const imageRegex =
+    /!\[.*?\]\(((?:file:\/\/\/)?(?:[a-zA-Z]:\\|[\\/])[^)]+)\)/g;
   const matches = [...mdText.matchAll(imageRegex)];
   const attachments: string[] = [];
 
@@ -111,7 +112,10 @@ export async function saveHandoff(options: {
       const baseName = path.basename(attachPath);
       const fileUrl = attachPath.replaceAll('\\', '/');
       finalMd = finalMd.replaceAll(attachPath, `./attachments/${baseName}`);
-      finalMd = finalMd.replaceAll(`file:///${fileUrl}`, `./attachments/${baseName}`);
+      finalMd = finalMd.replaceAll(
+        `file:///${fileUrl}`,
+        `./attachments/${baseName}`,
+      );
     }
   }
 
@@ -157,7 +161,10 @@ export async function saveHandoff(options: {
   if (metadata.zipRaw) {
     const zip = new AdmZip();
     zip.addFile('SUMMARY.md', Buffer.from(finalMd, 'utf8'));
-    zip.addFile('handoff.json', Buffer.from(JSON.stringify(metadata, null, 2), 'utf8'));
+    zip.addFile(
+      'handoff.json',
+      Buffer.from(JSON.stringify(metadata, null, 2), 'utf8'),
+    );
     zip.addFile(
       'raw/transcript.json',
       Buffer.from(
@@ -258,10 +265,7 @@ export async function applyHandoff(options: {
     redacted: metadata.redacted,
   };
 
-  const targetMetadataDir = path.join(
-    targetRepoPath,
-    '.handoffs',
-  );
+  const targetMetadataDir = path.join(targetRepoPath, '.handoffs');
   const metadataOutputPath = path.join(
     targetMetadataDir,
     `${metadata.handoffId}.json`,
@@ -277,8 +281,15 @@ export async function applyHandoff(options: {
   );
 
   if (metadata.zipRaw) {
-    const zipPath = path.join(config.handoffHome, metadata.handoffId, 'handoff.zip');
-    const targetZipExtractDir = path.join(targetMetadataDir, metadata.handoffId);
+    const zipPath = path.join(
+      config.handoffHome,
+      metadata.handoffId,
+      'handoff.zip',
+    );
+    const targetZipExtractDir = path.join(
+      targetMetadataDir,
+      metadata.handoffId,
+    );
     await ensureDir(targetZipExtractDir);
     const zip = new AdmZip(zipPath);
     zip.extractAllTo(targetZipExtractDir, true);

@@ -29,7 +29,8 @@ function getCodexHome() {
     return process.env.CODEX_HOME || path.join(os.homedir(), '.codex');
 }
 function getAntigravityHome() {
-    return process.env.ANTIGRAVITY_HOME || path.join(os.homedir(), '.gemini', 'antigravity');
+    return (process.env.ANTIGRAVITY_HOME ||
+        path.join(os.homedir(), '.gemini', 'antigravity'));
 }
 async function findFilesRecursively(dir, filter) {
     const results = [];
@@ -524,7 +525,10 @@ async function listCodexConversations() {
                             .join(' ');
                     }
                     if (text.trim()) {
-                        preview = text.trim().slice(0, 80).replace(/[\r\n]+/g, ' ');
+                        preview = text
+                            .trim()
+                            .slice(0, 80)
+                            .replace(/[\r\n]+/g, ' ');
                         break;
                     }
                 }
@@ -574,7 +578,10 @@ async function listAntigravityConversations() {
                     if (text.includes('<USER_REQUEST>')) {
                         text = text.split('<USER_REQUEST>')[1].split('</USER_REQUEST>')[0];
                     }
-                    preview = text.trim().slice(0, 80).replace(/[\r\n]+/g, ' ');
+                    preview = text
+                        .trim()
+                        .slice(0, 80)
+                        .replace(/[\r\n]+/g, ' ');
                     break;
                 }
             }
@@ -646,7 +653,10 @@ async function exportCodexConversation(sessionId) {
                 if (role === 'user') {
                     heading = '## User';
                     if (title === 'Untitled Codex Session') {
-                        title = `Codex: ${text.trim().slice(0, 80).replace(/[\r\n]+/g, ' ')}`;
+                        title = `Codex: ${text
+                            .trim()
+                            .slice(0, 80)
+                            .replace(/[\r\n]+/g, ' ')}`;
                     }
                 }
                 else if (role === 'assistant') {
@@ -713,7 +723,10 @@ async function exportAntigravityConversation(conversationId) {
             if (source === 'USER_EXPLICIT') {
                 heading = '## User';
                 if (title === 'Untitled Antigravity Session') {
-                    title = `Antigravity: ${text.trim().slice(0, 80).replace(/[\r\n]+/g, ' ')}`;
+                    title = `Antigravity: ${text
+                        .trim()
+                        .slice(0, 80)
+                        .replace(/[\r\n]+/g, ' ')}`;
                 }
             }
             else if (source === 'MODEL') {

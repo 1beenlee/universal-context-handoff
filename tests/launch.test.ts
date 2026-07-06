@@ -14,22 +14,12 @@ describe('launch workflow', () => {
     expect(result.launched).toBe(false);
     expect(result.command).toContain(`cd '/tmp/target-repo'`);
     expect(result.command).toContain('claude --append-system-prompt');
-    expect(result.command).toContain(
-      '.handoffs/handoff-123.json',
-    );
+    expect(result.command).toContain('.handoffs/handoff-123.json');
     expect(result.instructionsPath).toBe(
-      path.join(
-        '/tmp/target-repo',
-        '.handoffs',
-        'handoff-123.md',
-      ),
+      path.join('/tmp/target-repo', '.handoffs', 'handoff-123.md'),
     );
     expect(result.metadataPath).toBe(
-      path.join(
-        '/tmp/target-repo',
-        '.handoffs',
-        'handoff-123.json',
-      ),
+      path.join('/tmp/target-repo', '.handoffs', 'handoff-123.json'),
     );
   });
 });

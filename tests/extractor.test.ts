@@ -74,7 +74,7 @@ describe('extractor adapter', () => {
     const root = await mkdtemp(path.join(os.tmpdir(), 'cch-extractor-'));
     const sourcePath = path.join(root, 'source');
     await mkdir(sourcePath, { recursive: true });
-    
+
     const mockExtractor = path.join(root, 'mock-extractor.mjs');
     await writeFile(
       mockExtractor,

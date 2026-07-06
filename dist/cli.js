@@ -66,9 +66,13 @@ program
     const config = await loadAppConfig(sourceRepoPath);
     await ensureExtractorAvailable(config.extractor);
     const platform = (commandOptions.platform ||
-        (commandOptions.yes ? 'claude-code' : await promptForPlatform()));
+        (commandOptions.yes
+            ? 'claude-code'
+            : await promptForPlatform()));
     const mode = (commandOptions.mode ||
-        (commandOptions.yes ? 'session' : await promptForHandoffMode()));
+        (commandOptions.yes
+            ? 'session'
+            : await promptForHandoffMode()));
     const redact = commandOptions.redact !== false;
     const zipRaw = !!commandOptions.zipRaw;
     const conversations = await listConversations(sourceRepoPath, config.extractor, platform);
@@ -334,7 +338,9 @@ program
         throw new Error(`Unsupported install scope: ${commandOptions.scope}`);
     }
     const platform = commandOptions.platform;
-    if (platform !== 'antigravity' && platform !== 'claude-code' && platform !== 'codex') {
+    if (platform !== 'antigravity' &&
+        platform !== 'claude-code' &&
+        platform !== 'codex') {
         throw new Error(`Unsupported platform: ${commandOptions.platform}`);
     }
     const destinationRoot = scope === 'global'
