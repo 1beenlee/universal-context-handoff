@@ -2,6 +2,8 @@
 
 # Universal Context Handoff Skill
 
+![Universal Context Handoff 개요](docs/assets/readme-hero-ko.png)
+
 ## 개요
 
 `universal-context-handoff`는 한 저장소의 AI Assistant(Claude Code, Codex, Antigravity 등) 대화 맥락을 다른 저장소로 넘길 때, 원본 저장소 경로와 대상 저장소 경로, 원래 사용하던 규칙 파일(CLAUDE.md, AGENTS.md, .cursorrules) 정보, 그리고 선택적인 설정/스킬 복사 결과를 함께 보존하는 오픈소스 CLI 및 스킬 프로젝트입니다.

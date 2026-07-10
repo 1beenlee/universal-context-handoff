@@ -2,6 +2,8 @@
 
 # Universal Context Handoff Skill
 
+![Universal Context Handoff overview](docs/assets/readme-hero-en.png)
+
 ## Overview
 
 `universal-context-handoff` is an open-source CLI and skill for moving AI Assistant (Claude Code, Codex, Antigravity, etc.) conversation context from one repository to another while preserving the source repo path, target repo path, original rules files, and optional transfer results.
