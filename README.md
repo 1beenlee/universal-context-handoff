@@ -8,6 +8,15 @@
 
 `universal-context-handoff` is an open-source CLI and skill for moving AI Assistant (Claude Code, Codex, Antigravity, etc.) conversation context from one repository to another while preserving the source repo path, target repo path, original rules files, and optional transfer results.
 
+## Current support boundary (v0.1.0)
+
+- **Supported:** Claude Code JSONL sessions, Codex CLI rollout JSONL sessions, and Codex archived sessions.
+- **Experimental:** Antigravity legacy JSONL transcripts.
+- **Not supported:** Antigravity IDE `.db` / `.pb` session formats and Claude Cowork. Claude.ai web transcripts need manual import.
+- **Privacy:** Local-first handoff. Automatic redaction is best-effort; review generated transcripts and metadata before sharing or committing them.
+
+This is a context-transfer tool, not a cloud-memory service or an autonomous agent runner.
+
 ## Why it is useful
 
 When work moves across repositories, AI assistants can lose track of which repository a relative path or convention originally referred to. This project generates durable handoff metadata plus an explicit instruction block in the target's `.handoffs/` directory so future conversations can retain origin and path-mapping context.
